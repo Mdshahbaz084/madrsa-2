@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://mdshahbaz084.github.io/madrsa-2/sitemap.xml
