@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Madrasa Sikariya</title>
+    <link rel="icon" href="image/icon1.png">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/pwa.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Jameel+Noori+Nastaleeq&display=swap" rel="stylesheet">
+
+    <style>
+        .language-switcher {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 15px;
+            position: relative;
+        }
+        .language-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            background: #1a3a6d;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 16px;
+        }
+        .language-btn:hover {
+            background: #2c5aa0;
+            transform: translateY(-2px);
+        }
+        .language-btn.active {
+            background: #2c5aa0;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .language-btn i {
+            font-size: 16px;
+        }
+        [lang="ur"] {
+            font-family: 'Amiri', 'Jameel Noori Nastaleeq', serif;
+            line-height: 1.8;
+        }
+        [lang="ur"] h1, [lang="ur"] h2, [lang="ur"] h3, [lang="ur"] h4, [lang="ur"] p, [lang="ur"] span, [lang="ur"] a, [lang="ur"] button {
+            font-family: 'Amiri', 'Jameel Noori Nastaleeq', serif;
+        }
+        [lang="ur"] h1 {
+            font-size: 36px;
+            letter-spacing: 0.5px;
+            margin-bottom: 15px;
+        }
+        [lang="ur"] h2 {
+            font-size: 32px;
+            letter-spacing: 0.3px;
+        }
+        [lang="ur"] h1, [lang="ur"] h2, [lang="ur"] h3, [lang="ur"] h4 {
+            font-weight: 700;
+            text-shadow: 0 1px 1px rgba(0,0,0,0.1);
+        }
+        [lang="ur"] .nav-links a span {
+            margin-right: 8px;
+            font-size: 18px;
+            font-family: 'Amiri', 'Jameel Noori Nastaleeq', serif;
+        }
+        [lang="ur"] .service-item {
+            text-align: right;
+            transition: transform 0.3s ease;
+        }
+        [lang="ur"] .service-item:hover {
+            transform: translateY(-5px);
+        }
+        [lang="ur"] .service-item h4 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #1a3a6d;
+        }
+        [lang="ur"] .service-item p {
+            font-size: 18px;
+            line-height: 2;
+        }
+        [lang="ur"] .section-header h3 {
+            font-size: 30px;
+            line-height: 1.8;
+            color: #1a3a6d;
+            border-bottom: 2px solid #1a3a6d;
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+        [lang="ur"] .mobile-header h1 {
+            font-size: 24px;
+            line-height: 1.8;
+        }
+        [lang="ur"] .donate-btn {
+            font-family: 'Amiri', 'Jameel Noori Nastaleeq', serif;
+            font-size: 17px;
+            font-weight: 600;
+            padding: 10px 20px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+        [lang="ur"] .donate-btn:hover {
+            transform: scale(1.05);
+        }
+        [lang="ur"] .contact-person p, [lang="ur"] .contact-details p {
+            font-family: 'Amiri', 'Jameel Noori Nastaleeq', serif;
+            font-size: 17px;
+            line-height: 1.7;
+        }
+        [lang="ur"] footer p {
+            font-family: 'Amiri', 'Jameel Noori Nastaleeq', serif;
+            font-size: 16px;
+            padding: 12px;
+        }
+        [lang="ur"] .donation-card {
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            transform: translateY(0);
+            transition: all 0.3s ease;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        [lang="ur"] .donation-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+        [lang="ur"] .donation-card h4 {
+            font-size: 24px;
+            color: #1a3a6d;
+            padding: 0 15px;
+            letter-spacing: 0.3px;
+        }
+        [lang="ur"] .donation-card p {
+            font-size: 17px;
+            line-height: 1.9;
+            padding: 0 15px;
+        }
+        [lang="ur"] .contact-card {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateY(0);
+            transition: all 0.3s ease;
+            padding: 25px;
+            border-radius: 12px;
+        }
+        [lang="ur"] .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        [lang="ur"] .contact-card h4 {
+            font-size: 26px;
+            color: #1a3a6d;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #3a7eac;
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+        [lang="ur"] .language-btn {
+            font-family: 'Amiri', 'Jameel Noori Nastaleeq', serif;
+            font-size: 10px;
+            font-weight: 600;
+        }
+        [lang="ur"] [data-translate="contactDetails"] {
+            font-family: 'Amiri', 'Jameel Noori Nastaleeq', serif;
+        }
+        [lang="ur"] [data-translate="founderTitle"], 
+        [lang="ur"] [data-translate="managementTitle"],
+        [lang="ur"] [data-translate="locationTitle"],
+        [lang="ur"] [data-translate="founderName"],
+        [lang="ur"] [data-translate="managementName1"],
+        [lang="ur"] [data-translate="managementName2"],
+        [lang="ur"] [data-translate="locationDetails"],
+        [lang="ur"] [data-translate="contactTitle"],
+        [lang="ur"] [data-translate="donationTitle"],
+        [lang="ur"] [data-translate="donationCard1Title"],
+        [lang="ur"] [data-translate="donationCard2Title"],
+        [lang="ur"] [data-translate="donationCard3Title"],
+        [lang="ur"] [data-translate="donationCard1Desc"],
+        [lang="ur"] [data-translate="donationCard2Desc"],
+        [lang="ur"] [data-translate="donationCard3Desc"] {
+            font-family: 'Amiri', 'Jameel Noori Nastaleeq', serif;
+        }
+        [lang="ur"] .section {
+            position: relative;
+        }
+        [lang="ur"] .section:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(26, 58, 109, 0.5), transparent);
+        }
+        [lang="ur"] .card-icon {
+            color: #1a3a6d;
+            transition: transform 0.4s ease;
+        }
+        [lang="ur"] .donation-card:hover .card-icon,
+        [lang="ur"] .contact-card:hover .card-icon {
+            transform: scale(1.15) translateY(-5px);
+            color: #3a7eac;
+        }
+        [lang="ur"] p[data-translate] {
+            font-size: 17px;
+            line-height: 1.9;
+        }
+        [lang="ur"] strong[data-translate] {
+            font-weight: 700;
+            color: #333;
+        }
+        [lang="ur"] .sidebar h2[data-translate] {
+            font-size: 20px;
+            /* color: #1a3a6d;
+            margin: 15px 0; */
+            line-height: 1.7;
+        }
+        .translation-loading[lang="ur"] {
+            font-family: 'Amiri', 'Jameel Noori Nastaleeq', serif;
+            font-size: 18px;
+        }
+        .translation-loading {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #1a3a6d;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: none;
+            z-index: 1000;
+            animation: fadeInOut 1s ease-in-out;
+        }
+        @keyframes fadeInOut {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+    </style>
+    <!-- PWA related meta tags -->
+    <meta name="theme-color" content="#1a3a6d">
+    <meta name="description" content="Welcome to Madrasa Sikariya - Islamic education and community center">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Madrasa Sikariya">
+    
+    <!-- PWA manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" href="image/icon1.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="image/icon1.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="image/icon1.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="image/icon1.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="image/icon1.png">
+</head>
+<body>
+    <section id="home"></section>
+    <div class="container">
+        <nav class="sidebar" id="sidebar">
+            <div class="logo-section" data-aos="fade-right">
+                <img src="image/logo.jpg" alt="Madrasa Logo" class="logo">
+                <h2 data-translate="welcome">Welcome to Madrasa Sikariya</h2>
+            </div>
+            <div class="language-switcher" data-aos="fade-right" data-aos-delay="50">
+                <button class="language-btn active" data-lang="en">
+                    <i class="fas fa-globe"></i>
+                    English
+                </button>
+                <button class="language-btn" data-lang="ur">
+                    <i class="fas fa-globe"></i>
+                    اردو
+                </button>
+            </div>
+            <ul class="nav-links">
+                <li data-aos="fade-right" data-aos-delay="100"><a href="#home"><i class="material-icons">home</i><span data-translate="home">Home</span></a></li>
+                <li data-aos="fade-right" data-aos-delay="200"><a href="#introduction"><i class="material-icons">info</i><span data-translate="introduction">Introduction</span></a></li>
+                <li data-aos="fade-right" data-aos-delay="300"><a href="#media"><i class="material-icons">perm_media</i><span data-translate="media">Media</span></a></li>
+                <li data-aos="fade-right" data-aos-delay="400"><a href="#donation"><i class="material-icons">volunteer_activism</i><span data-translate="donation">Donation</span></a></li>
+                <li data-aos="fade-right" data-aos-delay="500"><a href="#contact-us"><i class="material-icons">contact_mail</i><span data-translate="contactUs">Contact Us</span></a></li>
+                <li data-aos="fade-right" data-aos-delay="600"><a href="question-and-answer.html"><i class="material-icons">question_answer</i><span data-translate="questionAnswer">Question Answer</span></a></li>
+            </ul>
+            <div class="social-links" data-aos="fade-up">
+                <h4 data-translate="shareWebsite">Share Website</h4>
+                <div class="share-buttons">
+                    <a href="javascript:void(0)" onclick="shareOnFacebook()" class="share-icon"><i class="fab fa-facebook"></i></a>
+                    <a href="javascript:void(0)" onclick="shareOnWhatsApp()" class="share-icon"><i class="fab fa-whatsapp"></i></a>
+                    <a href="javascript:void(0)" onclick="shareOnTwitter()" class="share-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="javascript:void(0)" onclick="copyToClipboard()" class="share-icon"><i class="fas fa-copy"></i></a>
+                </div>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <div class="mobile-header">
+                <button id="menuToggle" class="menu-toggle">
+                    <i class="material-icons">menu</i>
+                </button>
+                <h1 data-translate="welcome">Welcome to Madrasa Sikariya</h1>
+            </div>
+            
+            <section id="media" class="section" data-aos="fade-up">
+                <h2 data-translate="mediaTitle">Media</h2>
+                <div class="content">
+                    <div class="section-header">
+                        <h3 data-translate="mediaSubtitle">Madrasa Ki Tasveeren</h3>
+                    </div>
+                    <div class="section-body">
+                        <div class="media-container">
+                            <div class="slideshow-container">
+                                <div class="mySlides fade">
+                                    <img src="image slide/inside front.jpg" alt="Madrasa Building">
+                                    <!-- <div class="slide-caption">Madrasa Main Building</div> -->
+                                </div>
+
+                                <div class="mySlides fade">
+                                    <img src="image slide/inside intro.jpg" alt="Students Learning">
+                                    <!-- <div class="slide-caption">Students Learning Environment</div> -->
+                                </div>
+
+                                <div class="mySlides fade">
+                                    <img src="image slide/inside view.jpg" alt="Prayer Area">
+                                    <!-- <div class="slide-caption">Interior View</div> -->
+                                </div>
+                                <div class="mySlides fade">
+                                    <img src="image slide/inside2.jpg" alt="Prayer Area">
+                                    <!-- <div class="slide-caption">Study & Prayer Area</div> -->
+                                </div>
+                                <div class="mySlides fade">
+                                    <img src="image slide/inside4.jpg" alt="Prayer Area">
+                                    <!-- <div class="slide-caption">Community Space</div> -->
+                                </div>
+                                <div class="mySlides fade">
+                                    <img src="image slide/board.jpg" alt="Prayer Area">
+                                    <!-- <div class="slide-caption">Community Space</div> -->
+                                </div>
+
+                                <!-- Navigation buttons -->
+                                <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
+                                <a class="next" onclick="changeSlide(1)">&#10095;</a>
+                            </div>
+                            
+                            <!-- Dots/indicators -->
+                            <div class="dots-container" style="text-align:center">
+                                <span class="dot" onclick="currentSlide(1)"></span>
+                                <span class="dot" onclick="currentSlide(2)"></span>
+                                <span class="dot" onclick="currentSlide(3)"></span>
+                                <span class="dot" onclick="currentSlide(4)"></span>
+                                <span class="dot" onclick="currentSlide(5)"></span>
+                                <span class="dot" onclick="currentSlide(6)"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="introduction" class="section" data-aos="fade-up">
+                <h2 data-translate="introduction">Introduction</h2>
+                <div class="content">
+                    <div class="section-header">
+                        <h3 data-translate="madrasaTitle">Darul Uloom Faizain-E-Tajushsharia Sikariya</h3>
+                        <!-- <p class="section-subtitle">Ilmi Aur Deeni Taleem Ka Markaz</p> -->
+                    </div>
+                    <div class="section-body">
+                        <div class="services">
+                            <h3 data-translate="ourServices">Hamari Khidmat</h3>
+                            <div class="service-grid">
+                                <div class="service-item" data-aos="zoom-in" data-aos-delay="100">
+                                    <i class="fas fa-book-quran service-icon"></i>
+                                    <h4>Taleem-e-Qur'an</h4>
+                                    <p>Hamari taleem ke markazi hissa Qur'an ki tilawat aur tafseer hai. Hum Qur'an ko makhsoos tajweed ke sath padhate hain aur uski amali istamal ki taraf bhi rahanmaye karte hain.</p>
+                                </div>
+                                <div class="service-item" data-aos="zoom-in" data-aos-delay="200">
+                                    <i class="fas fa-mosque service-icon"></i>
+                                    <h4>Hadith Aur Fiqh</h4>
+                                    <p>Hadith ki tafseer aur fiqh ke mutaliq pur-sukoon aur asan tareeqay se ilm faraham kiya jata hai, jisse ke students ko deeni masail ko samajhne mein madad milti hai.</p>
+                                </div>
+                                <div class="service-item" data-aos="zoom-in" data-aos-delay="300">
+                                    <i class="fas fa-star-and-crescent service-icon"></i>
+                                    <h4>Islamic Studies</h4>
+                                    <p>Hamare madrasah mein Islam ke bunyadi usool aur ittehadat se mutaliq mutanazah mozoat ki taleem bhi di jati hai, jo students ko apne deen ko behtar samajhne mein madad deti hai.</p>
+                                </div>
+                                <div class="service-item" data-aos="zoom-in" data-aos-delay="400">
+                                    <i class="fas fa-hands-praying service-icon"></i>
+                                    <h4>Akhlaq Aur Adab</h4>
+                                    <p>Islam ke akhlaq aur adab ko farogh dene ke liye hum mukhtalif workshop aur seminar bhi muntazim karte hain, jisse ke students ki shakhsiyat aur khuluq sudhar sake.</p>
+                                </div>
+                                <div class="service-item" data-aos="zoom-in" data-aos-delay="500">
+                                    <i class="fas fa-futbol service-icon"></i>
+                                    <h4>Extra-Curricular Activities</h4>
+                                    <p>Taleem ke sath sath hum students ko extra-curricular activities jese ke sports, debates, aur art ke mauqe bhi faraham karte hain taake wo ek balanced aur holistic development hasil kar saken.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="donation" class="section" data-aos="fade-up">
+                <h2 data-translate="donation">Donation</h2>
+                <div class="content">
+                    <div class="section-header">
+                        <h3 data-translate="donationTitle">Madrasa Ki Madad</h3>
+                    </div>
+                    <div class="section-body">
+                        <div class="donation-cards">
+                            <div class="donation-card" data-aos="flip-left" data-aos-delay="100">
+                                <i class="fas fa-hand-holding-heart card-icon"></i>
+                                <h4 data-translate="donationCard1Title">Madrasa Ka Kaam Mukammal Karne Mein Aapki Madad Ki Zarurat</h4>
+                                <p data-translate="donationCard1Desc">Hamare madrasa ka kaam apne ikhtitam ke qareeb hai, magar abhi kuch aham hissa kam hona baqi hai. Ye madrasa sirf ek imarat nahi, balki un bacho ke liye ek umeed hai jo yahan taleem hasil karte hain aur apne mustaqbil ko roshan karne ka khwab dekhte hain</p>
+                                <a href="donation.html" class="donate-btn" data-translate="donateNow">Donate Now</a>
+                            </div>
+
+                            <div class="donation-card" data-aos="flip-left" data-aos-delay="200">
+                                <i class="fas fa-school card-icon"></i>
+                                <h4 data-translate="donationCard2Title">Madrasa: Taleem Ki Roshni Ka Markaz</h4>
+                                <p data-translate="donationCard2Desc">Ye madrasa ek roshni ka markaz hai jahan bache apni zindagi ki rahein roshan karte hain. Magar is roshni ko poora karne ke liye aapki madad zaruri hai. Aap apne chhote se hissa se is imarat ko tamam karne mein madad kar sakte hain jahan in bacho ka mustaqbil banega.</p>
+                                <a href="donation.html" class="donate-btn" data-translate="donateNow">Donate Now</a>
+                            </div>
+
+                            <div class="donation-card" data-aos="flip-left" data-aos-delay="300">
+                                <i class="fas fa-praying-hands card-icon"></i>
+                                <h4 data-translate="donationCard3Title">Aapki Madad Se Mukammal Hoga Ye Kaam</h4>
+                                <p data-translate="donationCard3Desc">Hamara madrasa jo ke taleem ka markaz hai, uska kaam takreeban mukammal ho chuka hai, magar abhi kuch kaam baqi hai. Aapka diya hua chhota sa hissa is madrasa ko mukammal karne mein madadgar hoga, aur aapke liye ek behtareen sadqa e jariyah banega.</p>
+                                <a href="donation.html" class="donate-btn" data-translate="donateNow">Donate Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="contact-us" class="section" data-aos="fade-up">
+                <h2 data-translate="contactUs">Contact Us</h2>
+                <div class="content">
+                    <div class="section-header">
+                        <h3 data-translate="contactTitle">Rabta Karein</h3>
+                    </div>
+                    <div class="section-body">
+                        <div class="contact-intro">
+                        </div>
+                        
+                        <div class="contact-cards">
+                            <div class="contact-card" data-aos="zoom-in" data-aos-delay="100">
+                                <i class="fas fa-address-card card-icon"></i>
+                                <h4 data-translate="contactDetails">Contact Details</h4>
+                                <div class="contact-info">
+                                    <p style="background-color:#3a7eac; border-radius: 25px; text-align: center;color: azure; padding: 6px 10px;" data-translate="founderTitle">Founder Of Madrsa</p>
+                                    <div class="contact-person">
+                                        <i class="fas fa-user-tie"></i>
+                                        <div class="contact-details">
+                                            <p><strong data-translate="founderName">Khalif E Anwar Olama Maulana Md Jannatur Rab Razwi</strong></p>
+                                            <p><i class="fas fa-phone-alt"></i> <a href="tel://9199904604">9199904604</a></p>
+                                            <p><i class="fas fa-envelope"></i> <a href="mailto:jannaturrab010@gmail.com">jannaturrab010@gmail.com</a></p>
+                                        </div>
+                                    </div>
+                                    <p style="background-color:#3a7eac; border-radius: 25px; text-align: center;color: azure; padding: 6px 10px;" data-translate="managementTitle">Mannagment Of Madrsa</p>
+                                    <div class="contact-person"> 
+                                        <i class="fas fa-user-tie"></i> 
+                                        <div class="contact-details">
+                                            <p><strong data-translate="managementName1">Md Ibrar</strong></p>
+                                            <p><i class="fas fa-phone-alt"></i> <a href="tel://9973621173">9973621173</a></p>
+                                            <!-- <p><i class="fas fa-envelope"></i> <a href="mailto:mdibrar@example.com">mdibrar@example.com</a></p> -->
+                                        </div>
+                                        <div class="contact-person">
+                                            <i class="fas fa-user-tie"></i>
+                                            <div class="contact-details">
+                                                <p><strong data-translate="managementName2">Md Irfan</strong></p>
+                                                <p><i class="fas fa-phone-alt"></i> <a href="tel://9470463078">9470463078</a></p>
+                                                <!-- <p><i class="fas fa-envelope"></i> <a href="mailto:mdibrar@example.com">mdibrar@example.com</a></p> -->
+                                            </div>
+                                        </div>
+                                    </div>                
+                                </div>
+                            </div>
+
+                            <div class="contact-card" data-aos="zoom-in" data-aos-delay="200">
+                                <i class="fas fa-map-marker-alt card-icon"></i>
+                                <h4 data-translate="locationTitle">Location</h4>
+                                <div class="map-container">
+                                    <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d817.5385837494532!2d84.3499444!3d25.08025!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjXCsDA0JzQ4LjkiTiA4NMKwMjAnNTkuOCJF!5e1!3m2!1sen!2sin!4v1724840594494!5m2!1sen!2sin" width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                                    <p><strong data-translate="locationDetails">Village-Sikariya, P.S- Karakat(Gorari),Dist- Rohtas(Bihar)821310</strong></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <!-- Back to top button -->
+        <button class="back-to-top" id="backToTop">
+            <i class="material-icons">arrow_upward</i>
+        </button>
+        
+    </div>
+    <div class="translation-loading">Translating...</div>
+    <footer>        
+        <div>
+            <p style="background-color: #2c3e50;color: aliceblue; padding: 15px; text-align: center;" data-translate="copyright">&copy;Copyright 2022 Madrasa Darul Uloom Faizain-E-Tajushsharia Sikariyan. All Rights Reserved</p>
+        </div>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/pwa.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100
+        });
+        
+        // Back to top button functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const backToTopButton = document.getElementById('backToTop');
+            
+            // Show/hide button based on scroll position
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopButton.classList.add('visible');
+                } else {
+                    backToTopButton.classList.remove('visible');
+                }
+            });
+            
+            // Smooth scroll to top when clicked
+            backToTopButton.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+    <script>
+        // Language translations
+        const translations = {
+            en: {
+                welcome: "Welcome to Madrasa Sikariya",
+                home: "Home",
+                introduction: "Introduction",
+                media: "Media",
+                donation: "Donation",
+                contactUs: "Contact Us",
+                questionAnswer: "Question Answer",
+                shareWebsite: "Share Website",
+                madrasaTitle: "Darul Uloom Faizain-E-Tajushsharia Sikariya",
+                ourServices: "Hamari Khidmat",
+                mediaTitle: "Media Gallery",
+                mediaSubtitle: "Madrasa Ki Tasveeren",
+                quranTitle: "Taleem-e-Qur'an",
+                quranDesc: "Hamari taleem ke markazi hissa Qur'an ki tilawat aur tafseer hai. Hum Qur'an ko makhsoos tajweed ke sath padhate hain aur uski amali istamal ki taraf bhi rahanmaye karte hain.",
+                hadithTitle: "Hadith and Fiqh",
+                hadithDesc: "Hadith ki tafseer aur fiqh ke mutaliq pur-sukoon aur asan tareeqay se ilm faraham kiya jata hai, jisse ke students ko deeni masail ko samajhne mein madad milti hai.",
+                islamicTitle: "Islamic Studies",
+                islamicDesc: "Hamare madrasah mein Islam ke bunyadi usool aur ittehadat se mutaliq mutanazah mozoat ki taleem bhi di jati hai, jo students ko apne deen ko behtar samajhne mein madad deti hai.",
+                akhlaqTitle: "Akhlaq Aur Adab",
+                akhlaqDesc: "Islam ke akhlaq aur adab ko farogh dene ke liye hum mukhtalif workshop aur seminar bhi muntazim karte hain, jisse ke students ki shakhsiyat aur khuluq sudhar sake.",
+                activitiesTitle: "Extra-Curricular Activities",
+                activitiesDesc: "Taleem ke sath sath hum students ko extra-curricular activities jese ke sports, debates, aur art ke mauqe bhi faraham karte hain taake wo ek balanced aur holistic development hasil kar saken.",
+                donationTitle: "Madrasa Ki Madad",
+                donateNow: "Donate Now",
+                contactTitle: "Contact Us",
+                contactDetails: "Contact Details",
+                founderTitle: "Founder Of Madrsa",
+                managementTitle: "Management Of Madrsa",
+                locationTitle: "Location",
+                copyright: "Copyright 2022 Madrasa Darul Uloom Faizain-E-Tajushsharia Sikariyan. All Rights Reserved",
+                donationCard1Title: "Madrasa Ka Kaam Mukammal Karne Mein Aapki Madad Ki Zarurat",
+                donationCard1Desc: "Hamare madrasa ka kaam apne ikhtitam ke qareeb hai, magar abhi kuch aham hissa tamam hona baqi hai. Ye madrasa sirf ek imarat nahi, balki un bacho ke liye ek umeed hai jo yahan taleem hasil karte hain aur apne mustaqbil ko roshan karne ka khwab dekhte hain",
+                donationCard2Title: "Madrasa: Taleem Ki Roshni Ka Markaz",
+                donationCard2Desc: "Ye madrasa ek roshni ka markaz hai jahan bache apni zindagi ki rahein roshan karte hain. Magar is roshni ko poora karne ke liye aapki madad zaruri hai. Aap apne chhote se hissa se is imarat ko tamam karne mein madad kar sakte hain jahan in bacho ka mustaqbil banega.",
+                donationCard3Title: "Aapki Madad Se Mukammal Hoga Ye Kaam",
+                donationCard3Desc: "Hamara madrasa jo ke taleem ka markaz hai, uska kaam takreeban mukammal ho chuka hai, magar abhi kuch kaam baqi hai. Aapka diya hua chhota sa hissa is madrasa ko mukammal karne mein madadgar hoga, aur aapke liye ek behtareen sadqa e jariyah banega.",
+                locationDetails: "Village-Sikariya, P.S- Karakat(Gorari),Dist- Rohtas(Bihar)821310",
+                founderName: "Khalif E Anwar ul Olama Maulana Md Jannatur Rab Razwi",
+                managementName1: "Md Ibrar",
+                managementName2: "Md Irfan"
+            },
+            ur: {
+                welcome: "مدرسہ سکریاں میں خوش آمدید",
+                home: "صفحہ اول",
+                introduction: "تعارف",
+                media: "میڈیا گیلری",
+                donation: "عطیات",
+                contactUs: "رابطہ کریں",
+                questionAnswer: "سوال و جواب",
+                shareWebsite: "ویب سائٹ شیئر کریں",
+                madrasaTitle: "دارالعلوم فیضان تاج الشریعہ سکریاں",
+                ourServices: "ہماری خدمات",
+                mediaTitle: "میڈیا گیلری",
+                mediaSubtitle: "مدرسہ کی تصاویریں",
+                quranTitle: "تعلیم القرآن",
+                quranDesc: "ہماری تعلیم کا مرکزی حصہ قرآن کی تلاوت اور تفسیر ہے۔ ہم قرآن کو مخصوص تجوید کے ساتھ پڑھاتے ہیں اور اس کے عملی استعمال کی طرف بھی رہنمائی کرتے ہیں۔",
+                hadithTitle: "حدیث و فقہ",
+                hadithDesc: "حدیث کی تفسیر اور فقہ کے متعلق پرسکون اور آسان طریقے سے علم فراہم کیا جاتا ہے، جس سے طلباء کو دینی مسائل کو سمجھنے میں مدد ملتی ہے۔",
+                islamicTitle: "اسلامی تعلیمات",
+                islamicDesc: "ہمارے مدرسہ میں اسلام کے بنیادی اصول اور اتحاد سے متعلق موضوعات کی تعلیم بھی دی جاتی ہے، جو طلباء کو اپنے دین کو بہتر سمجھنے میں مدد دیتی ہے۔",
+                akhlaqTitle: "اخلاق و آداب",
+                akhlaqDesc: "اسلام کے اخلاق اور آداب کو فروغ دینے کے لیے ہم مختلف ورکشاپ اور سیمینار بھی منتظم کرتے ہیں، جس سے طلباء کی شخصیت اور خلق سدھر سکے۔",
+                activitiesTitle: "اضافی سرگرمیاں",
+                activitiesDesc: "تعلیم کے ساتھ ساتھ ہم طلباء کو اضافی سرگرمیاں جیسے کھیل، مباحثے، اور آرٹ کے مواقع بھی فراہم کرتے ہیں تاکہ وہ متوازن اور مکمل نشوونما حاصل کر سکیں۔",
+                donationTitle: "مدرسہ کی مدد",
+                donateNow: "عطیہ دیں",
+                contactTitle: "رابطہ کریں",
+                contactDetails: "رابطہ کی تفصیلات",
+                founderTitle: "مدرسہ کے بانی",
+                managementTitle: "مدرسہ کا انتظام",
+                locationTitle: "مقام",
+                copyright: "جملہ حقوق محفوظ ہیں © ٢٠٢٢ مدرسہ دارالعلوم فیضان تاج الشریعہ سکریاں",
+                donationCard1Title: "مدرسہ کا کام مکمل کرنے میں آپکی مدد کی ضرورت",
+                donationCard1Desc: "ہمارے مدرسہ کا کام اپنے اختتام کے قریب ہے، مگر ابھی کچھ اہم حصہ تمام ہونا باقی ہے۔ یہ مدرسہ صرف ایک عمارت نہیں، بلکہ ان بچوں کے لئے ایک امید ہے جو یہاں تعلیم حاصل کرتے ہیں اور اپنے مستقبل کو روشن کرنے کا خواب دیکھتے ہیں",
+                donationCard2Title: "مدرسہ: تعلیم کی روشنی کا مرکز",
+                donationCard2Desc: "یہ مدرسہ ایک روشنی کا مرکز ہے جہاں بچے اپنی زندگی کی راہیں روشن کرتے ہیں۔ مگر اس روشنی کو پورا کرنے کے لئے آپکی مدد ضروری ہے۔ آپ اپنے چھوٹے سے حصہ سے اس عمارت کو تمام کرنے میں مدد کر سکتے ہیں جہاں ان بچوں کا مستقبل بنے گا۔",
+                donationCard3Title: "آپکی مدد سے مکمل ہوگا یہ کام",
+                donationCard3Desc: "ہمارا مدرسہ جو کہ تعلیم کا مرکز ہے، اس کا کام تقریباً مکمل ہو چکا ہے، مگر ابھی کچھ کام باقی ہے۔ آپکا دیا ہوا چھوٹا سا حصہ اس مدرسہ کو مکمل کرنے میں مددگار ہوگا، اور آپکے لئے ایک بہترین صدقہ جاریہ بنے گا۔",
+                locationDetails: "گاؤں-سکریاں، تھانہ-کاراکاٹ (گوڑاڑی)، ضلع-روہتاس (بہار) ٨٢١٣١٠",
+                founderName: "خلیفہ انوار العلماء مولینا محمد جنت الرب رضوی ",
+                managementName1: "محمد ابرار",
+                managementName2: "محمد عرفان"
+            }
+        };
+
+        // Language switcher functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const languageBtns = document.querySelectorAll('.language-btn');
+            const loadingIndicator = document.querySelector('.translation-loading');
+            
+            function showLoadingIndicator() {
+                loadingIndicator.style.display = 'block';
+                setTimeout(() => {
+                    loadingIndicator.style.display = 'none';
+                }, 1000);
+            }
+
+            function updateContent(lang) {
+                showLoadingIndicator();
+                document.documentElement.lang = lang;
+                loadingIndicator.setAttribute('lang', lang);
+                loadingIndicator.textContent = lang === 'ur' ? 'زبان تبدیل ہو رہی ہے...' : 'Translating...';
+
+                // Update all elements with data-translate attribute
+                document.querySelectorAll('[data-translate]').forEach(element => {
+                    const key = element.getAttribute('data-translate');
+                    if (translations[lang][key]) {
+                        element.textContent = translations[lang][key];
+                    }
+                });
+
+                // Update navigation text
+                const navItems = {
+                    '#home': 'home',
+                    '#introduction': 'introduction',
+                    '#media': 'media',
+                    '#donation': 'donation',
+                    '#contact-us': 'contactUs',
+                    'question-and-answer.html': 'questionAnswer'
+                };
+
+                Object.entries(navItems).forEach(([href, key]) => {
+                    const link = document.querySelector(`a[href="${href}"] span`);
+                    if (link && translations[lang][key]) {
+                        link.textContent = translations[lang][key];
+                    }
+                });
+
+                // Update all headings and content
+                const elements = {
+                    'h2': 'welcome',
+                    '.mobile-header h1': 'welcome',
+                    '.social-links h4': 'shareWebsite',
+                    '#introduction .section-header h3': 'madrasaTitle',
+                    '.services h3': 'ourServices',
+                    '#media h2': 'mediaTitle',
+                    '#media .section-header h3': 'mediaSubtitle',
+                    'footer p': 'copyright'
+                };
+
+                Object.entries(elements).forEach(([selector, key]) => {
+                    const elements = document.querySelectorAll(selector);
+                    elements.forEach(element => {
+                        if (translations[lang][key]) {
+                            element.textContent = translations[lang][key];
+                            element.setAttribute('lang', lang);
+                        }
+                    });
+                });
+
+                // Update service items
+                const serviceItems = document.querySelectorAll('.service-item');
+                const serviceKeys = [
+                    ['quranTitle', 'quranDesc'],
+                    ['hadithTitle', 'hadithDesc'],
+                    ['islamicTitle', 'islamicDesc'],
+                    ['akhlaqTitle', 'akhlaqDesc'],
+                    ['activitiesTitle', 'activitiesDesc']
+                ];
+
+                serviceItems.forEach((item, index) => {
+                    if (serviceKeys[index]) {
+                        const [titleKey, descKey] = serviceKeys[index];
+                        item.setAttribute('lang', lang);
+                        
+                        const titleElement = item.querySelector('h4');
+                        const descElement = item.querySelector('p');
+                        
+                        if (titleElement && translations[lang][titleKey]) {
+                            titleElement.textContent = translations[lang][titleKey];
+                            titleElement.setAttribute('lang', lang);
+                        }
+                        if (descElement && translations[lang][descKey]) {
+                            descElement.textContent = translations[lang][descKey];
+                            descElement.setAttribute('lang', lang);
+                        }
+                    }
+                });
+
+                // Update active button and store preference
+                languageBtns.forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.lang === lang);
+                });
+                localStorage.setItem('preferredLanguage', lang);
+            }
+
+            // Add click event listeners to language buttons
+            languageBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const lang = btn.dataset.lang;
+                    updateContent(lang);
+                });
+            });
+
+            // Set initial language based on localStorage or default to English
+            const savedLang = localStorage.getItem('preferredLanguage') || 'en';
+            updateContent(savedLang);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "name": "Madrasa Sikariya",
+  "short_name": "Madrasa Sikariya",
+  "description": "Welcome to Madrasa Sikariya - Darul Uloom Faizain-E-Tajushsharia Sikariya",
+  "start_url": "./index.html",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1a3a6d",
+  "icons": [
+    {
+      "src": "./image/icon1.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

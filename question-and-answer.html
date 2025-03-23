@@ -1,0 +1,1922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questions and Answers - Madrasa Sikariya</title>
+    <link rel="icon" href="image/icon1.png">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/pwa.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- PWA related meta tags -->
+    <meta name="theme-color" content="#1a3a6d">
+    <meta name="description" content="Frequently asked questions about Madrasa Sikariya">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Madrasa Sikariya">
+    
+    <!-- PWA manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" href="image/icons/icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="image/icons/icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="image/icons/icon-192x192.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="image/icons/icon-152x152.png">
+    
+    <style>
+        /* Additional styles for Q&A page */
+        .qa-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .qa-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .qa-subtitle {
+            color: var(--secondary-color);
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+        
+        #questionForm {
+            margin: 20px 0;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        
+        .btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        
+        .btn:hover {
+            opacity: 0.9;
+        }
+        
+        #userName {
+            margin: 10px 0;
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+        
+        .question {
+            background: #f9f9f9;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .answer-input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        
+        .answer-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+        
+        .answers {
+            margin-top: 10px;
+            padding-left: 15px;
+            border-left: 3px solid var(--accent-color);
+        }
+        
+        .answer {
+            margin: 8px 0;
+            padding: 8px;
+            background: #f0f0f0;
+            border-radius: 5px;
+        }
+        
+        .search-container {
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        #searchQuestions {
+            width: 100%;
+            padding: 12px 45px 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-color);
+        }
+        
+        .search-results {
+            margin-top: 10px;
+            color: var(--secondary-color);
+            font-style: italic;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 20px;
+            color: #999;
+            font-style: italic;
+        }
+        
+        .vote-buttons {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin: 10px 0;
+        }
+        
+        .vote-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #777;
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+        
+        .vote-btn:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .vote-btn.upvoted {
+            color: var(--accent-color);
+        }
+        
+        .vote-btn.downvoted {
+            color: #e74c3c;
+        }
+        
+        .vote-count {
+            font-weight: 600;
+            margin: 0 5px;
+            min-width: 20px;
+            text-align: center;
+        }
+        
+        .pagination {
+            display: none;
+        }
+        
+        .pagination-btn {
+            display: none;
+        }
+        
+        .loading-indicator {
+            text-align: center;
+            margin: 20px 0;
+            color: var(--secondary-color);
+        }
+        
+        .notification {
+            position: absolute;
+            background: linear-gradient(135deg, var(--primary-color), #2c5282);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            z-index: 1000;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            opacity: 0;
+            max-width: 300px;
+            width: auto;
+            text-align: center;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100%) scale(0.95);
+            margin-top: -10px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .notification.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(-100%) scale(1);
+        }
+        
+        .notification::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 8px solid var(--primary-color);
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        
+        .notification-title {
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 4px;
+            color: #ffffff;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        
+        .notification-title::before {
+            content: '';
+            width: 18px;
+            height: 18px;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ffffff"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z"/></svg>');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+            opacity: 0.9;
+        }
+        
+        .notification-message {
+            font-size: 13px;
+            margin: 0;
+            color: rgba(255,255,255,0.9);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+            display: block;
+        }
+        
+        .notification-close {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 20px;
+        }
+        
+        .notification-badge {
+            position: absolute;
+            top: 10px;
+            right: 5px;
+            background-color: #e74c3c;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Share buttons styles */
+        .share-buttons {
+            display: flex;
+            margin-top: 10px;
+            gap: 8px;
+        }
+        
+        .share-btn {
+            border: none;
+            background-color: #f1f1f1;
+            color: #333;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+        }
+        
+        .share-btn:hover {
+            background-color: #e1e1e1;
+        }
+        
+        .share-btn i {
+            font-size: 16px;
+            margin-right: 5px;
+        }
+        
+        /* Draft indicator */
+        .draft-indicator {
+            font-size: 12px;
+            color: #888;
+            margin-top: 5px;
+            font-style: italic;
+        }
+        
+        .draft-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 5px;
+        }
+        
+        .draft-btn {
+            border: none;
+            background: none;
+            color: var(--accent-color);
+            cursor: pointer;
+            font-size: 12px;
+            padding: 2px 5px;
+        }
+        
+        .draft-btn:hover {
+            text-decoration: underline;
+        }
+        
+        /* User profile styles */
+        .profile-section {
+            display: none;
+            margin-bottom: 20px;
+            background-color: var(--light-bg);
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+        }
+        
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-right: 20px;
+            object-fit: cover;
+        }
+        
+        .profile-info h3 {
+            margin: 0 0 10px 0;
+        }
+        
+        /* Styles for edit and delete buttons */
+        .action-buttons {
+            display: flex;
+            margin-top: 5px;
+        }
+
+        .edit-btn, .delete-btn {
+            background-color: #f0f0f0;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            margin-right: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+        }
+
+        .edit-btn {
+            color: #1976d2;
+        }
+
+        .delete-btn {
+            color: #e53935;
+        }
+
+        .edit-btn:hover {
+            background-color: #e3f2fd;
+        }
+
+        .delete-btn:hover {
+            background-color: #ffebee;
+        }
+
+        .edit-form {
+            margin-top: 10px;
+            display: none;
+        }
+
+        .edit-input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 5px;
+        }
+
+        .edit-actions {
+            display: flex;
+        }
+
+        .save-edit-btn {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .cancel-edit-btn {
+            background-color: #9e9e9e;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .qa-container {
+                padding: 15px;
+                margin: 10px;
+                border-radius: 10px;
+            }
+            
+            .qa-header {
+                margin-bottom: 15px;
+            }
+            
+            .qa-subtitle {
+                font-size: 0.9em;
+                margin-bottom: 10px;
+            }
+            
+            #questionForm {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            #questionInput {
+                width: 100%;
+                min-height: 100px;
+                padding: 10px;
+                font-size: 14px;
+            }
+            
+            .btn {
+                width: 100%;
+                padding: 10px;
+                font-size: 14px;
+            }
+            
+            .question {
+                padding: 12px;
+                margin-bottom: 12px;
+                border-radius: 8px;
+            }
+            
+            .question-text {
+                font-size: 14px;
+                line-height: 1.4;
+            }
+            
+            .vote-buttons {
+                justify-content: center;
+                margin: 8px 0;
+                gap: 15px;
+            }
+            
+            .vote-btn {
+                padding: 8px;
+                font-size: 18px;
+            }
+            
+            .vote-count {
+                font-size: 14px;
+                min-width: 20px;
+            }
+            
+            .share-buttons {
+                flex-wrap: nowrap;
+                justify-content: center;
+                gap: 8px;
+                margin: 8px 0;
+            }
+            
+            .share-btn {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+            
+            .action-buttons {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 8px;
+                margin: 8px 0;
+            }
+            
+            .edit-btn, .delete-btn {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+            
+            .answer-input {
+                width: 100%;
+                padding: 8px;
+                margin: 8px 0;
+                font-size: 14px;
+                min-height: 80px;
+            }
+            
+            .answer-btn {
+                width: 100%;
+                padding: 8px;
+                margin: 5px 0;
+                font-size: 14px;
+            }
+            
+            .answers {
+                padding-left: 10px;
+                margin-top: 8px;
+            }
+            
+            .answer {
+                padding: 8px;
+                margin: 6px 0;
+                border-radius: 6px;
+            }
+            
+            .answer-text {
+                font-size: 14px;
+                line-height: 1.4;
+            }
+            
+            .search-container {
+                margin: 15px 0;
+            }
+            
+            #searchQuestions {
+                padding: 10px 35px 10px 12px;
+                font-size: 14px;
+            }
+            
+            .search-icon {
+                right: 10px;
+                font-size: 18px;
+            }
+            
+            .notification {
+                padding: 8px 12px;
+                max-width: 280px;
+                font-size: 13px;
+            }
+            
+            .profile-section {
+                padding: 15px;
+                margin: 10px 0;
+            }
+            
+            .profile-header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .profile-avatar {
+                width: 60px;
+                height: 60px;
+                margin: 0 0 10px 0;
+            }
+            
+            .profile-info h3 {
+                font-size: 16px;
+                margin-bottom: 5px;
+            }
+            
+            .profile-info p {
+                font-size: 14px;
+            }
+            
+            .draft-indicator {
+                font-size: 11px;
+                margin-top: 3px;
+            }
+            
+            .draft-actions {
+                margin-top: 3px;
+            }
+            
+            .draft-btn {
+                font-size: 11px;
+                padding: 2px 4px;
+            }
+            
+            .edit-form {
+                margin-top: 8px;
+            }
+            
+            .edit-input {
+                padding: 6px;
+                font-size: 14px;
+                min-height: 80px;
+            }
+            
+            .edit-actions {
+                gap: 5px;
+                flex-wrap: wrap;
+            }
+            
+            .save-edit-btn, .cancel-edit-btn {
+                padding: 4px 8px;
+                font-size: 12px;
+                flex: 1;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .qa-container {
+                padding: 10px;
+                margin: 5px;
+            }
+            
+            .question-text, .answer-text {
+                font-size: 13px;
+            }
+            
+            .vote-btn {
+                padding: 6px;
+                font-size: 16px;
+            }
+            
+            .share-btn {
+                padding: 4px 8px;
+                font-size: 11px;
+            }
+            
+            .edit-btn, .delete-btn {
+                padding: 4px 8px;
+                font-size: 11px;
+            }
+            
+            .notification {
+                padding: 6px 10px;
+                max-width: 240px;
+                font-size: 12px;
+            }
+            
+            .notification-title {
+                font-size: 12px;
+            }
+            
+            .notification-message {
+                font-size: 11px;
+            }
+            
+            .profile-avatar {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .profile-info h3 {
+                font-size: 14px;
+            }
+            
+            .profile-info p {
+                font-size: 12px;
+            }
+        }
+        
+        .question-interactions, .answer-interactions {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            margin: 15px 0;
+            gap: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .question-interactions, .answer-interactions {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .vote-buttons {
+                justify-content: center;
+                margin: 10px auto;
+            }
+            
+            .vote-btn {
+                padding: 10px;  /* Larger touch targets for mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+    <section id="question-and-answer"></section>
+    <div class="container">
+        <nav class="sidebar" id="sidebar">
+            <div class="logo-section" data-aos="fade-right">
+                <img src="image/icon madrsa.jpg" alt="Madrasa Logo" class="logo">
+                <h2>Welcome to Madrasa Sikariya</h2>
+            </div>
+            <ul class="nav-links">
+                <li data-aos="fade-right" data-aos-delay="100"><a href="index.html#home"><i class="material-icons">home</i>Home</a></li>
+                <li data-aos="fade-right" data-aos-delay="200"><a href="index.html#introduction"><i class="material-icons">info</i>Introduction</a></li>
+                <li data-aos="fade-right" data-aos-delay="300"><a href="index.html#media"><i class="material-icons">perm_media</i>Media</a></li>
+                <li data-aos="fade-right" data-aos-delay="400"><a href="index.html#donation"><i class="material-icons">volunteer_activism</i>Donation</a></li>
+                <li data-aos="fade-right" data-aos-delay="500"><a href="index.html#contact-us"><i class="material-icons">contact_mail</i>Contact Us</a></li>
+                <li data-aos="fade-right" data-aos-delay="600"><a href="question-and-answer.html" class="active"><i class="material-icons">question_answer</i>Question And Answer</a></li>
+            </ul>
+            <div class="social-links" data-aos="fade-up">
+                <h4>Share Website</h4>
+                <div class="share-buttons">
+                    <a href="javascript:void(0)" onclick="shareOnFacebook()" class="share-icon"><i class="fab fa-facebook"></i></a>
+                    <a href="javascript:void(0)" onclick="shareOnWhatsApp()" class="share-icon"><i class="fab fa-whatsapp"></i></a>
+                    <a href="javascript:void(0)" onclick="shareOnTwitter()" class="share-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="javascript:void(0)" onclick="copyToClipboard()" class="share-icon"><i class="fas fa-copy"></i></a>
+                </div>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <div class="mobile-header">
+                <button id="menuToggle" class="menu-toggle">
+                    <i class="material-icons">menu</i>
+                </button>
+                <h1>Questions and Answers</h1>
+            </div>
+            
+            <section id="questions" class="section" data-aos="fade-up">
+                <h2 style="text-align: center;">Questions and Answers</h2>
+                <div class="content">
+                    <div class="section-header">
+                        <h3>Community Questions</h3>
+                        <p class="section-subtitle">Ask questions and get answers from our community</p>
+                    </div>
+                    <div class="section-body qa-container">
+                        <div class="profile-container">
+                            <button id="loginBtn" class="btn" onclick="googleLogin()">Login with Google for Asking a Question</button>
+                            <button id="logoutBtn" class="btn" onclick="logout()" style="display: none;">Logout</button>
+                            <p id="userName"></p>
+                            
+                            <!-- User Profile Section -->
+                            <div id="profileSection" class="profile-section">
+                                <div class="profile-header">
+                                    <img id="profileAvatar" src="" alt="Profile Image" class="profile-avatar">
+                                    <div class="profile-info">
+                                        <h3 id="profileName"></h3>
+                                        <p id="profileEmail"></p>
+                                    </div>
+                                </div>
+                            </div>
+                
+                            <div class="search-container">
+                                <input type="text" id="searchQuestions" placeholder="Search for questions...">
+                                <i class="material-icons search-icon">search</i>
+                                <p class="search-results" id="searchResults"></p>
+                            </div>
+                
+                            <h2>Ask a Question</h2>
+                
+                            <form id="questionForm">
+                                <textarea id="questionInput" placeholder="Type your question here..."></textarea>
+                                <div id="draftIndicator" class="draft-indicator" style="display: none;">
+                                    Draft saved <span id="draftTime"></span>
+                                    <div class="draft-actions">
+                                        <button type="button" class="draft-btn" id="clearDraft">Clear Draft</button>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn">Submit Question</button>
+                            </form>
+                
+                            <div id="questionsList"></div>
+                        
+                            <div id="loading" class="loading-indicator" style="display: none;">
+                                <i class="material-icons">hourglass_empty</i> Loading...
+                            </div>
+                        
+                            <!-- Notification element -->
+                            <div id="notification" class="notification">
+                                <div class="notification-title">
+                                    <span id="notification-title">New Activity</span>
+                                    <button class="notification-close" onclick="closeNotification()">&times;</button>
+                                </div>
+                                <p id="notification-message" class="notification-message"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <!-- Back to top button -->
+        <button class="back-to-top" id="backToTop">
+            <i class="material-icons">arrow_upward</i>
+        </button>
+        
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            easing: 'ease',
+            once: true,
+            offset: 100
+        });
+        
+        // Mobile menu toggle
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('show');
+        });
+        
+        // Back to top button functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const backToTopButton = document.getElementById('backToTop');
+            
+            // Show/hide button based on scroll position
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopButton.classList.add('visible');
+                } else {
+                    backToTopButton.classList.remove('visible');
+                }
+            });
+            
+            // Smooth scroll to top when clicked
+            backToTopButton.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+    
+    <script type="module">
+        // Import Firebase SDKs
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, query, orderBy, limit, getDocs, doc, updateDoc, getDoc, startAfter, deleteDoc, setDoc, where, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        // Firebase Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyBfqQkLMdirE1s3QDAU-k8kZJDSJ-AHfxI",
+            authDomain: "madrsa-sikariya.firebaseapp.com",
+            projectId: "madrsa-sikariya",
+            storageBucket: "madrsa-sikariya.appspot.com",
+            messagingSenderId: "1066102927865",
+            appId: "1:1066102927865:web:d5e649be4178d363408d28"
+        };
+
+        // Firebase Initialize
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        // 🔹 Google Login Function
+        window.googleLogin = async () => {
+            try {
+                const result = await signInWithPopup(auth, provider);
+                // The signed-in user info.
+                const user = result.user;
+                
+                // Save email notification preferences if they don't exist
+                const userRef = doc(db, "users", user.uid);
+                const userSnap = await getDoc(userRef);
+                
+                if (!userSnap.exists()) {
+                    await setDoc(userRef, {
+                        email: user.email,
+                        displayName: user.displayName,
+                        photoURL: user.photoURL,
+                        lastLogin: new Date()
+                    });
+                } else {
+                    // Update last login time
+                    await updateDoc(userRef, {
+                        lastLogin: new Date()
+                    });
+                }
+                
+                showNotification("Login Successful", "You are now logged in!");
+                loadUserProfile(user);
+            } catch (error) {
+                console.error("Error during Google sign in: ", error);
+                alert("Login failed. Please try again.");
+            }
+        };
+
+        // Load user profile data
+        async function loadUserProfile(user) {
+            if (!user) return;
+            
+            // Show profile section
+            document.getElementById('profileSection').style.display = 'block';
+            
+            // Set profile basics
+            document.getElementById('profileName').textContent = user.displayName;
+            document.getElementById('profileEmail').textContent = user.email;
+            document.getElementById('profileAvatar').src = user.photoURL || 'https://via.placeholder.com/80';
+            
+            // Load user's data
+            const userRef = doc(db, "users", user.uid);
+            const userSnap = await getDoc(userRef);
+            
+            if (!userSnap.exists()) {
+                await setDoc(userRef, {
+                    email: user.email,
+                    displayName: user.displayName,
+                    photoURL: user.photoURL,
+                    lastLogin: new Date()
+                });
+            } else {
+                // Update last login time
+                await updateDoc(userRef, {
+                    lastLogin: new Date()
+                });
+            }
+        }
+        
+        // Function to scroll to a specific question
+        window.scrollToQuestion = (questionId) => {
+            const questionElement = document.querySelector(`[onclick="voteQuestion('${questionId}', 'up')"]`).closest('.question');
+            if (questionElement) {
+                questionElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                questionElement.style.boxShadow = '0 0 10px var(--accent-color)';
+                setTimeout(() => {
+                    questionElement.style.boxShadow = '';
+                }, 3000);
+            }
+        };
+        
+        // Send email notification
+        async function sendEmailNotification(type, recipientId, contentId) {
+            try {
+                // Get recipient user data
+                const userRef = doc(db, "users", recipientId);
+                const userSnap = await getDoc(userRef);
+                
+                if (!userSnap.exists()) return;
+                
+                const userData = userSnap.data();
+                
+                // In a real-world application, you would integrate with a service like SendGrid, Mailgun, etc.
+                // For this example, we'll log the notification to the console and show a fake successful notification
+                console.log(`Would send ${type} notification email to ${userData.email}`);
+                
+                // In a real application, you would add the email to a queue or call an API here
+                // For now, we'll simulate a successful email send
+                return {
+                    success: true,
+                    message: `Notification email sent to ${userData.email}`
+                };
+            } catch (error) {
+                console.error("Error sending email notification:", error);
+                return {
+                    success: false,
+                    message: "Failed to send notification email"
+                };
+            }
+        }
+        
+        // 🔹 Logout Function
+        window.logout = async () => {
+            try {
+                await signOut(auth);
+                showNotification("Logout Successful", "You are now logged out!");
+                document.getElementById("userName").innerText = "";
+                document.getElementById("loginBtn").style.display = "block";
+                document.getElementById("logoutBtn").style.display = "none";
+                document.getElementById('profileSection').style.display = 'none';
+            } catch (error) {
+                console.error("Error during logout: ", error);
+                alert("Logout failed. Please try again.");
+            }
+        };
+
+        // 🔹 Auth State Change (Check if user is logged in)
+        onAuthStateChanged(auth, (user) => {
+            const loginBtn = document.getElementById("loginBtn");
+            const logoutBtn = document.getElementById("logoutBtn");
+            const userName = document.getElementById("userName");
+            const profileSection = document.getElementById("profileSection");
+
+            if (user) {
+                // User is signed in
+                loginBtn.style.display = "none";
+                logoutBtn.style.display = "inline-block";
+                userName.textContent = `Welcome, ${user.displayName}!`;
+                profileSection.style.display = "block";
+                
+                // Load user profile data
+                loadUserProfile(user);
+                
+                // Fix all existing content
+                fixUserIdOnExistingContent();
+                
+                // Update action buttons visibility
+                updateActionButtonsVisibility();
+            } else {
+                // User is signed out
+                loginBtn.style.display = "inline-block";
+                logoutBtn.style.display = "none";
+                userName.textContent = "";
+                profileSection.style.display = "none";
+            }
+        });
+
+        // Function to fix userId on existing content
+        async function fixUserIdOnExistingContent() {
+            const user = auth.currentUser;
+            if (!user) return;
+            
+            console.log("Fixing userId on existing content for user:", user.displayName);
+            
+            try {
+                // Fix questions
+                const q = query(collection(db, "questions"), where("user", "==", user.displayName));
+                const questionDocs = await getDocs(q);
+                
+                questionDocs.forEach(async (doc) => {
+                    const data = doc.data();
+                    if (!data.userId) {
+                        console.log("Adding userId to question:", doc.id);
+                        await updateDoc(doc.ref, {
+                            userId: user.uid
+                        });
+                    }
+                });
+                
+                // Fix answers
+                const a = query(collection(db, "answers"), where("user", "==", user.displayName));
+                const answerDocs = await getDocs(a);
+                
+                answerDocs.forEach(async (doc) => {
+                    const data = doc.data();
+                    if (!data.userId) {
+                        console.log("Adding userId to answer:", doc.id);
+                        await updateDoc(doc.ref, {
+                            userId: user.uid
+                        });
+                    }
+                });
+                
+                console.log("Fixed userId on all existing content");
+            } catch (error) {
+                console.error("Error fixing userId:", error);
+            }
+        }
+
+        // Search functionality
+        document.getElementById("searchQuestions").addEventListener("input", function() {
+            const searchTerm = this.value.toLowerCase();
+            const questionsList = document.getElementById("questionsList");
+            const questions = questionsList.querySelectorAll(".question");
+            let resultCount = 0;
+            
+            questions.forEach(question => {
+                const questionText = question.querySelector("p").textContent.toLowerCase();
+                if (searchTerm === "" || questionText.includes(searchTerm)) {
+                    question.style.display = "block";
+                    resultCount++;
+                } else {
+                    question.style.display = "none";
+                }
+            });
+            
+            const searchResults = document.getElementById("searchResults");
+            if (searchTerm === "") {
+                searchResults.textContent = "";
+            } else if (resultCount === 0) {
+                searchResults.textContent = "No matching questions found";
+            } else {
+                searchResults.textContent = `Found ${resultCount} matching question(s)`;
+            }
+        });
+
+        // 🔹 Question Submit Function
+        document.getElementById("questionForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const questionText = document.getElementById("questionInput").value;
+            const user = auth.currentUser;
+
+            if (user) {
+                const submitButton = e.target.querySelector('button[type="submit"]');
+                await addDoc(collection(db, "questions"), {
+                    text: questionText,
+                    user: user.displayName,
+                    userId: user.uid,
+                    timestamp: new Date(),
+                    votes: 0,
+                    userVotes: {}
+                });
+                document.getElementById("questionInput").value = "";
+                loadQuestions();
+                
+                // Show notification near the submit button
+                showNotification("Question Posted", "Your question has been successfully posted!", submitButton);
+            } else {
+                alert("Please login to ask a question.");
+            }
+        });
+
+        // 🔹 Load Questions with Pagination
+        let lastVisible = null;
+        let firstVisible = null;
+        let currentPage = 1;
+        const questionsPerPage = 5;
+        
+        async function loadQuestions() {
+            document.getElementById("loading").style.display = "block";
+            
+            try {
+                // Create a real-time listener for questions
+                const q = query(
+                    collection(db, "questions"), 
+                    orderBy("timestamp", "desc")
+                );
+
+                // Set up real-time listener
+                const unsubscribe = onSnapshot(q, (querySnapshot) => {
+                    document.getElementById("questionsList").innerHTML = "";
+                    
+                    querySnapshot.forEach((doc) => {
+                        const question = doc.data();
+                        
+                        document.getElementById("questionsList").innerHTML += `
+                            <div class="question" id="question-${doc.id}">
+                                <div class="question-header">
+                                    <small>${new Date(question.timestamp.toDate()).toLocaleString()}</small>
+                                </div>
+                                <p class="question-text"><strong>${question.user}:</strong> ${question.text}</p>
+                                <div class="vote-buttons">
+                                    <button class="vote-btn" onclick="voteQuestion('${doc.id}', 'up')"><i class="material-icons">thumb_up</i></button>
+                                    <span class="vote-count" id="question-votes-${doc.id}">${question.votes || 0}</span>
+                                    <button class="vote-btn" onclick="voteQuestion('${doc.id}', 'down')"><i class="material-icons">thumb_down</i></button>
+                                </div>
+                                <div class="share-buttons">
+                                    <button class="share-btn" onclick="shareQuestion('${doc.id}', 'copy')"><i class="material-icons">content_copy</i> Copy Link</button>
+                                    <button class="share-btn" onclick="shareQuestion('${doc.id}', 'facebook')"><i class="material-icons">share</i> Facebook</button>
+                                    <button class="share-btn" onclick="shareQuestion('${doc.id}', 'twitter')"><i class="material-icons">send</i> Twitter</button>
+                                    <button class="share-btn" onclick="shareQuestion('${doc.id}', 'whatsapp')"><i class="material-icons">chat</i> WhatsApp</button>
+                                </div>
+                                <div class="action-buttons" id="question-actions-${doc.id}" ${auth.currentUser && (auth.currentUser.uid === question.userId || auth.currentUser.displayName === question.user) ? '' : 'style="display:none"'}>
+                                    <button class="edit-btn" onclick="showEditQuestionForm('${doc.id}')"><i class="material-icons">edit</i> Edit</button>
+                                    <button class="delete-btn" onclick="deleteQuestion('${doc.id}')"><i class="material-icons">delete</i> Delete</button>
+                                </div>
+                                <div class="edit-form" id="edit-question-form-${doc.id}">
+                                    <textarea class="edit-input" id="edit-question-input-${doc.id}">${question.text}</textarea>
+                                    <div class="edit-actions">
+                                        <button class="save-edit-btn" onclick="saveQuestionEdit('${doc.id}')">Save</button>
+                                        <button class="cancel-edit-btn" onclick="cancelQuestionEdit('${doc.id}')">Cancel</button>
+                                    </div>
+                                </div>
+                                <input type="text" id="answerInput-${doc.id}" class="answer-input" placeholder="Write an answer">
+                                <button class="answer-btn" onclick="submitAnswer('${doc.id}')">Submit</button>
+                                <div id="answers-${doc.id}" class="answers"></div>
+                            </div>
+                        `;
+                        loadAnswers(doc.id);
+                    });
+                    
+                    document.getElementById("loading").style.display = "none";
+                    
+                    // Update action buttons visibility after loading questions
+                    if (auth.currentUser) {
+                        updateActionButtonsVisibility();
+                    }
+                });
+                
+                // Store unsubscribe function for cleanup
+                window.unsubscribeQuestions = unsubscribe;
+                
+            } catch (error) {
+                console.error("Error loading questions:", error);
+                document.getElementById("loading").style.display = "none";
+            }
+        }
+
+        // 🔹 Answer Submit Function
+        window.submitAnswer = async (questionId) => {
+            const answerText = document.getElementById(`answerInput-${questionId}`).value;
+            const user = auth.currentUser;
+
+            if (user) {
+                const submitButton = document.querySelector(`button[onclick="submitAnswer('${questionId}')"]`);
+                await addDoc(collection(db, "answers"), {
+                    questionId: questionId,
+                    text: answerText,
+                    user: user.displayName,
+                    userId: user.uid,
+                    timestamp: new Date(),
+                    votes: 0,
+                    userVotes: {}
+                });
+                document.getElementById(`answerInput-${questionId}`).value = "";
+                loadAnswers(questionId);
+                
+                // Show notification near the submit button
+                showNotification("Answer Posted", "Your answer has been successfully posted!", submitButton);
+            } else {
+                alert("Please login to answer.");
+            }
+        };
+
+        // 🔹 Load Answers for a Question
+        async function loadAnswers(questionId) {
+            try {
+                // Create a simpler query without compound index
+                const q = query(
+                    collection(db, "answers"),
+                    where("questionId", "==", questionId)
+                );
+
+                // Set up real-time listener for answers
+                const unsubscribe = onSnapshot(q, (querySnapshot) => {
+                    const answersContainer = document.getElementById(`answers-${questionId}`);
+                    if (!answersContainer) return;
+                    
+                    answersContainer.innerHTML = "";
+                    
+                    // Sort answers by timestamp locally
+                    const answers = [];
+                    querySnapshot.forEach((doc) => {
+                        answers.push({ id: doc.id, ...doc.data() });
+                    });
+                    
+                    // Sort by timestamp descending
+                    answers.sort((a, b) => b.timestamp.seconds - a.timestamp.seconds);
+
+                    answers.forEach((answer) => {
+                        answersContainer.innerHTML += `
+                            <div class="answer" id="answer-${answer.id}">
+                                <p class="answer-text"><strong>${answer.user}:</strong> ${answer.text}</p>
+                                <div class="vote-buttons">
+                                    <button class="vote-btn" onclick="voteAnswer('${answer.id}', 'up')"><i class="material-icons">thumb_up</i></button>
+                                    <span class="vote-count" id="answer-votes-${answer.id}">${answer.votes || 0}</span>
+                                    <button class="vote-btn" onclick="voteAnswer('${answer.id}', 'down')"><i class="material-icons">thumb_down</i></button>
+                                </div>
+                                <div class="action-buttons" id="answer-actions-${answer.id}" ${auth.currentUser && (auth.currentUser.uid === answer.userId || auth.currentUser.displayName === answer.user) ? '' : 'style="display:none"'}>
+                                    <button class="edit-btn" onclick="showEditAnswerForm('${answer.id}')"><i class="material-icons">edit</i> Edit</button>
+                                    <button class="delete-btn" onclick="deleteAnswer('${answer.id}')"><i class="material-icons">delete</i> Delete</button>
+                                </div>
+                                <div class="edit-form" id="edit-answer-form-${answer.id}">
+                                    <textarea class="edit-input" id="edit-answer-input-${answer.id}">${answer.text}</textarea>
+                                    <div class="edit-actions">
+                                        <button class="save-edit-btn" onclick="saveAnswerEdit('${answer.id}', '${questionId}')">Save</button>
+                                        <button class="cancel-edit-btn" onclick="cancelAnswerEdit('${answer.id}')">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    
+                    // Update action buttons visibility for answers
+                    if (auth.currentUser) {
+                        setTimeout(() => {
+                            updateActionButtonsVisibility();
+                        }, 100);
+                    }
+                });
+
+                // Store unsubscribe function in a map using questionId as key
+                if (!window.unsubscribeAnswers) {
+                    window.unsubscribeAnswers = new Map();
+                }
+                window.unsubscribeAnswers.set(questionId, unsubscribe);
+                
+            } catch (error) {
+                console.error("Error loading answers:", error);
+            }
+        }
+
+        // Notification functions
+        window.showNotification = (title, message, element, type = 'success') => {
+            // Remove any existing notifications
+            const existingNotifications = document.querySelectorAll('.notification');
+            existingNotifications.forEach(n => n.remove());
+            
+            // Create a new notification element
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <div class="notification-title">${title}</div>
+                <p class="notification-message">${message}</p>
+            `;
+            
+            // Position the notification relative to the clicked element
+            if (element) {
+                element.style.position = 'relative';
+                element.appendChild(notification);
+            } else {
+                // Fallback to body if no element provided
+                document.body.appendChild(notification);
+            }
+            
+            // Show the notification with a slight delay for better animation
+            requestAnimationFrame(() => {
+                notification.classList.add('show');
+            });
+            
+            // Auto-hide after 2 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    notification.remove();
+                }, 400);
+            }, 2000);
+        };
+        
+        window.closeNotification = () => {
+            const notifications = document.querySelectorAll('.notification');
+            notifications.forEach(notification => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    notification.remove();
+                }, 400);
+            });
+        };
+
+        // Vote functions - copy and paste these into your question-and-answer.html file
+        window.voteQuestion = async (questionId, voteType) => {
+            const user = auth.currentUser;
+            if (!user) {
+                alert("Please login to vote");
+                return;
+            }
+
+            try {
+                const questionRef = doc(db, "questions", questionId);
+                const questionSnap = await getDoc(questionRef);
+                
+                if (questionSnap.exists()) {
+                    const questionData = questionSnap.data();
+                    const currentVotes = questionData.votes || 0;
+                    const userVotes = questionData.userVotes || {};
+                    
+                    console.log("Voting on question:", questionId);
+                    console.log("Current user:", user.uid);
+                    
+                    // Check if user already voted
+                    if (userVotes[user.uid] === voteType) {
+                        // User is removing their vote
+                        delete userVotes[user.uid];
+                        await updateDoc(questionRef, {
+                            votes: voteType === 'up' ? currentVotes - 1 : currentVotes + 1,
+                            userVotes: userVotes
+                        });
+                    } else if (userVotes[user.uid]) {
+                        // User is changing their vote
+                        userVotes[user.uid] = voteType;
+                        const voteDiff = voteType === 'up' ? 2 : -2; // +2 for down->up, -2 for up->down
+                        await updateDoc(questionRef, {
+                            votes: currentVotes + voteDiff,
+                            userVotes: userVotes
+                        });
+                    } else {
+                        // New vote
+                        userVotes[user.uid] = voteType;
+                        await updateDoc(questionRef, {
+                            votes: voteType === 'up' ? currentVotes + 1 : currentVotes - 1,
+                            userVotes: userVotes
+                        });
+                    }
+                    
+                    // Show notification for votes
+                    const voteBtn = document.querySelector(`button[onclick="voteQuestion('${questionId}', '${voteType}')"]`);
+                    showNotification(
+                        "Vote Recorded", 
+                        `You ${voteType === 'up' ? 'upvoted' : 'downvoted'} this question.`,
+                        voteBtn
+                    );
+                    
+                    // Update UI
+                    document.getElementById(`question-votes-${questionId}`).textContent = 
+                        questionData.votes + (voteType === 'up' ? 1 : -1);
+                    
+                    // Update vote button styles
+                    const upBtn = document.querySelector(`button[onclick="voteQuestion('${questionId}', 'up')"]`);
+                    const downBtn = document.querySelector(`button[onclick="voteQuestion('${questionId}', 'down')"]`);
+                    
+                    upBtn.classList.remove('upvoted');
+                    downBtn.classList.remove('downvoted');
+                    
+                    if (userVotes[user.uid] === 'up') {
+                        upBtn.classList.add('upvoted');
+                    } else if (userVotes[user.uid] === 'down') {
+                        downBtn.classList.add('downvoted');
+                    }
+                }
+            } catch (error) {
+                console.error("Error voting on question:", error);
+                alert("Error recording vote: " + error.message);
+            }
+        };
+
+        window.voteAnswer = async (answerId, voteType) => {
+            const user = auth.currentUser;
+            if (!user) {
+                alert("Please login to vote");
+                return;
+            }
+
+            try {
+                const answerRef = doc(db, "answers", answerId);
+                const answerSnap = await getDoc(answerRef);
+                
+                if (answerSnap.exists()) {
+                    const answerData = answerSnap.data();
+                    const currentVotes = answerData.votes || 0;
+                    const userVotes = answerData.userVotes || {};
+                    
+                    console.log("Voting on answer:", answerId);
+                    console.log("Current user:", user.uid);
+                    
+                    // Check if user already voted
+                    if (userVotes[user.uid] === voteType) {
+                        // User is removing their vote
+                        delete userVotes[user.uid];
+                        await updateDoc(answerRef, {
+                            votes: voteType === 'up' ? currentVotes - 1 : currentVotes + 1,
+                            userVotes: userVotes
+                        });
+                    } else if (userVotes[user.uid]) {
+                        // User is changing their vote
+                        userVotes[user.uid] = voteType;
+                        const voteDiff = voteType === 'up' ? 2 : -2; // +2 for down->up, -2 for up->down
+                        await updateDoc(answerRef, {
+                            votes: currentVotes + voteDiff,
+                            userVotes: userVotes
+                        });
+                    } else {
+                        // New vote
+                        userVotes[user.uid] = voteType;
+                        await updateDoc(answerRef, {
+                            votes: voteType === 'up' ? currentVotes + 1 : currentVotes - 1,
+                            userVotes: userVotes
+                        });
+                    }
+                    
+                    // Show notification for votes
+                    const voteBtn = document.querySelector(`button[onclick="voteAnswer('${answerId}', '${voteType}')"]`);
+                    showNotification(
+                        "Vote Recorded", 
+                        `You ${voteType === 'up' ? 'upvoted' : 'downvoted'} this answer.`,
+                        voteBtn
+                    );
+                    
+                    // Update UI
+                    document.getElementById(`answer-votes-${answerId}`).textContent = 
+                        answerData.votes + (voteType === 'up' ? 1 : -1);
+                    
+                    // Update vote button styles
+                    const upBtn = document.querySelector(`button[onclick="voteAnswer('${answerId}', 'up')"]`);
+                    const downBtn = document.querySelector(`button[onclick="voteAnswer('${answerId}', 'down')"]`);
+                    
+                    upBtn.classList.remove('upvoted');
+                    downBtn.classList.remove('downvoted');
+                    
+                    if (userVotes[user.uid] === 'up') {
+                        upBtn.classList.add('upvoted');
+                    } else if (userVotes[user.uid] === 'down') {
+                        downBtn.classList.add('downvoted');
+                    }
+                }
+            } catch (error) {
+                console.error("Error voting on answer:", error);
+                alert("Error recording vote: " + error.message);
+            }
+        };
+
+        // Auto-save draft functionality
+        let draftTimer;
+        const DRAFT_STORAGE_KEY = "questionDraft";
+        
+        function saveDraft() {
+            const questionInput = document.getElementById("questionInput");
+            const draftText = questionInput.value.trim();
+            
+            if (draftText) {
+                const draft = {
+                    text: draftText,
+                    timestamp: new Date().toISOString()
+                };
+                
+                localStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(draft));
+                
+                // Update the draft indicator
+                const draftIndicator = document.getElementById("draftIndicator");
+                const draftTime = document.getElementById("draftTime");
+                draftTime.textContent = "at " + new Date().toLocaleTimeString();
+                draftIndicator.style.display = "block";
+            }
+        }
+        
+        function loadDraft() {
+            const draftJson = localStorage.getItem(DRAFT_STORAGE_KEY);
+            if (draftJson) {
+                const draft = JSON.parse(draftJson);
+                document.getElementById("questionInput").value = draft.text;
+                
+                // Update the draft indicator
+                const draftIndicator = document.getElementById("draftIndicator");
+                const draftTime = document.getElementById("draftTime");
+                const draftDate = new Date(draft.timestamp);
+                draftTime.textContent = "at " + draftDate.toLocaleTimeString();
+                draftIndicator.style.display = "block";
+            }
+        }
+        
+        function clearDraft() {
+            localStorage.removeItem(DRAFT_STORAGE_KEY);
+            document.getElementById("questionInput").value = "";
+            document.getElementById("draftIndicator").style.display = "none";
+        }
+        
+        // 🔹 Question Edit and Delete Functions
+        window.showEditQuestionForm = (questionId) => {
+            // Hide the question text and show the edit form
+            document.getElementById(`edit-question-form-${questionId}`).style.display = 'block';
+        };
+
+        window.cancelQuestionEdit = (questionId) => {
+            // Hide the edit form
+            document.getElementById(`edit-question-form-${questionId}`).style.display = 'none';
+        };
+
+        window.saveQuestionEdit = async (questionId) => {
+            const user = auth.currentUser;
+            if (!user) {
+                alert("Please login to edit your question.");
+                return;
+            }
+
+            const newText = document.getElementById(`edit-question-input-${questionId}`).value.trim();
+            if (!newText) {
+                alert("Question cannot be empty.");
+                return;
+            }
+
+            // Get question reference
+            const questionRef = doc(db, "questions", questionId);
+            const questionSnap = await getDoc(questionRef);
+            
+            if (questionSnap.exists()) {
+                const questionData = questionSnap.data();
+                
+                // Verify the current user is the author
+                if (!(questionData.userId === user.uid || questionData.user === user.displayName)) {
+                    alert("You can only edit your own questions.");
+                    return;
+                }
+                
+                // If this is an older question without userId, add it now
+                if (!questionData.userId) {
+                    await updateDoc(questionRef, {
+                        userId: user.uid
+                    });
+                }
+                
+                // Update the question
+                await updateDoc(questionRef, {
+                    text: newText,
+                    edited: true,
+                    editTimestamp: new Date()
+                });
+                
+                // Update the UI
+                const questionElement = document.querySelector(`#question-${questionId} .question-text`);
+                questionElement.innerHTML = `<strong>${questionData.user}:</strong> ${newText}`;
+                
+                // Hide the edit form
+                document.getElementById(`edit-question-form-${questionId}`).style.display = 'none';
+                
+                showNotification("Question Updated", "Your question has been successfully updated!");
+            }
+        };
+
+        window.deleteQuestion = async (questionId) => {
+            const user = auth.currentUser;
+            if (!user) {
+                alert("Please login to delete your question.");
+                return;
+            }
+
+            if (!confirm("Are you sure you want to delete this question? This action cannot be undone.")) {
+                return;
+            }
+
+            try {
+                const questionRef = doc(db, "questions", questionId);
+                const questionSnap = await getDoc(questionRef);
+                
+                if (questionSnap.exists()) {
+                    const questionData = questionSnap.data();
+                    
+                    if (!(questionData.userId === user.uid || questionData.user === user.displayName)) {
+                        alert("You can only delete your own questions.");
+                        return;
+                    }
+                    
+                    const deleteButton = document.querySelector(`button[onclick="deleteQuestion('${questionId}')"]`);
+                    await deleteDoc(questionRef);
+                    
+                    // Show notification near the delete button
+                    showNotification("Question Deleted", "Your question has been successfully deleted!", deleteButton);
+                }
+            } catch (error) {
+                console.error("Error deleting question:", error);
+                alert("Error deleting question: " + error.message);
+            }
+        };
+
+        // 🔹 Answer Edit and Delete Functions
+        window.showEditAnswerForm = (answerId) => {
+            // Show the edit form
+            document.getElementById(`edit-answer-form-${answerId}`).style.display = 'block';
+        };
+
+        window.cancelAnswerEdit = (answerId) => {
+            // Hide the edit form
+            document.getElementById(`edit-answer-form-${answerId}`).style.display = 'none';
+        };
+
+        window.saveAnswerEdit = async (answerId, questionId) => {
+            const user = auth.currentUser;
+            if (!user) {
+                alert("Please login to edit your answer.");
+                return;
+            }
+
+            const newText = document.getElementById(`edit-answer-input-${answerId}`).value.trim();
+            if (!newText) {
+                alert("Answer cannot be empty.");
+                return;
+            }
+
+            // Get answer reference
+            const answerRef = doc(db, "answers", answerId);
+            const answerSnap = await getDoc(answerRef);
+            
+            if (answerSnap.exists()) {
+                const answerData = answerSnap.data();
+                
+                // Verify the current user is the author
+                if (!(answerData.userId === user.uid || answerData.user === user.displayName)) {
+                    alert("You can only edit your own answers.");
+                    return;
+                }
+                
+                // If this is an older answer without userId, add it now
+                if (!answerData.userId) {
+                    await updateDoc(answerRef, {
+                        userId: user.uid
+                    });
+                }
+                
+                // Update the answer
+                await updateDoc(answerRef, {
+                    text: newText,
+                    edited: true,
+                    editTimestamp: new Date()
+                });
+                
+                // Update the UI
+                const answerElement = document.querySelector(`#answer-${answerId} .answer-text`);
+                answerElement.innerHTML = `<strong>${answerData.user}:</strong> ${newText}`;
+                
+                // Hide the edit form
+                document.getElementById(`edit-answer-form-${answerId}`).style.display = 'none';
+                
+                showNotification("Answer Updated", "Your answer has been successfully updated!");
+            }
+        };
+
+        window.deleteAnswer = async (answerId) => {
+            const user = auth.currentUser;
+            if (!user) {
+                alert("Please login to delete your answer.");
+                return;
+            }
+
+            if (!confirm("Are you sure you want to delete this answer? This action cannot be undone.")) {
+                return;
+            }
+
+            try {
+                const answerRef = doc(db, "answers", answerId);
+                const answerSnap = await getDoc(answerRef);
+                
+                if (answerSnap.exists()) {
+                    const answerData = answerSnap.data();
+                    
+                    if (!(answerData.userId === user.uid || answerData.user === user.displayName)) {
+                        alert("You can only delete your own answers.");
+                        return;
+                    }
+                    
+                    const deleteButton = document.querySelector(`button[onclick="deleteAnswer('${answerId}')"]`);
+                    await deleteDoc(answerRef);
+                    
+                    // Show notification near the delete button
+                    showNotification("Answer Deleted", "Your answer has been successfully deleted!", deleteButton);
+                }
+            } catch (error) {
+                console.error("Error deleting answer:", error);
+                alert("Error deleting answer: " + error.message);
+            }
+        };
+
+        // Function to update action buttons visibility when auth state changes
+        function updateActionButtonsVisibility() {
+            const user = auth.currentUser;
+            if (!user) return;
+
+            // For questions
+            const questionElements = document.querySelectorAll('.question');
+            questionElements.forEach(async (questionElement) => {
+                const questionId = questionElement.id.replace('question-', '');
+                const questionRef = doc(db, "questions", questionId);
+                const questionSnap = await getDoc(questionRef);
+                
+                if (questionSnap.exists()) {
+                    const questionData = questionSnap.data();
+                    const actionButtons = document.getElementById(`question-actions-${questionId}`);
+                    
+                    if (actionButtons) {
+                        actionButtons.style.display = (user.uid === questionData.userId || user.displayName === questionData.user) ? 'flex' : 'none';
+                    }
+                }
+            });
+
+            // For answers
+            const answerElements = document.querySelectorAll('.answer');
+            answerElements.forEach(async (answerElement) => {
+                const answerId = answerElement.id.replace('answer-', '');
+                const answerRef = doc(db, "answers", answerId);
+                const answerSnap = await getDoc(answerRef);
+                
+                if (answerSnap.exists()) {
+                    const answerData = answerSnap.data();
+                    const actionButtons = document.getElementById(`answer-actions-${answerId}`);
+                    
+                    if (actionButtons) {
+                        actionButtons.style.display = (user.uid === answerData.userId || user.displayName === answerData.user) ? 'flex' : 'none';
+                    }
+                }
+            });
+        }
+
+        // 🔹 Share functionality
+        window.shareQuestion = (questionId, platform) => {
+            const questionText = document.querySelector(`[onclick="voteQuestion('${questionId}', 'up')"]`)
+                .closest('.question')
+                .querySelector('p')
+                .textContent;
+            
+            // Create a shareable URL
+            const baseUrl = window.location.href.split('?')[0];
+            const shareUrl = `${baseUrl}?qid=${questionId}`;
+            
+            switch (platform) {
+                case 'copy':
+                    navigator.clipboard.writeText(shareUrl)
+                        .then(() => {
+                            const copyBtn = document.querySelector(`button[onclick="shareQuestion('${questionId}', 'copy')"]`);
+                            showNotification("Link Copied", "clipboard!", copyBtn);
+                        })
+                        .catch(err => {
+                            console.error('Could not copy text: ', err);
+                            alert("Could not copy link. Please try again.");
+                        });
+                    break;
+                case 'facebook':
+                    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`, 
+                        '_blank', 'width=600,height=400');
+                    break;
+                case 'twitter':
+                    const tweetText = `Question: ${questionText.substring(0, 100)}... `;
+                    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}&url=${encodeURIComponent(shareUrl)}`, 
+                        '_blank', 'width=600,height=400');
+                    break;
+                case 'whatsapp':
+                    window.open(`https://wa.me/?text=${encodeURIComponent(`Question: ${questionText.substring(0, 100)}... ${shareUrl}`)}`, 
+                        '_blank', 'width=600,height=400');
+                    break;
+            }
+        };
+        
+        // Check for shared question in URL when page loads
+        function checkForSharedQuestion() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const questionId = urlParams.get('qid');
+            
+            if (questionId) {
+                // Wait for questions to load then scroll to the shared question
+                setTimeout(() => {
+                    const questionElement = document.querySelector(`[onclick="voteQuestion('${questionId}', 'up')"]`).closest('.question');
+                    if (questionElement) {
+                        questionElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        questionElement.style.boxShadow = '0 0 10px var(--accent-color)';
+                        setTimeout(() => {
+                            questionElement.style.boxShadow = '';
+                        }, 3000);
+                    }
+                }, 1000);
+            }
+        }
+        
+        // Setup auto-save draft functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const questionInput = document.getElementById("questionInput");
+            
+            // Load draft on page load
+            loadDraft();
+            
+            // Set up auto-save on input
+            questionInput.addEventListener('input', () => {
+                clearTimeout(draftTimer);
+                draftTimer = setTimeout(saveDraft, 1000);
+            });
+            
+            // Set up clear draft button
+            document.getElementById("clearDraft").addEventListener('click', (e) => {
+                e.preventDefault();
+                clearDraft();
+            });
+            
+            // Check for shared question in URL
+            checkForSharedQuestion();
+        });
+
+        // Load Initial Questions
+        loadQuestions();
+        
+        // Share functions
+        function shareOnFacebook() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank', 'width=600,height=400');
+        }
+
+        function shareOnWhatsApp() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://wa.me/?text=${url}`, '_blank', 'width=600,height=400');
+        }
+
+        function shareOnTwitter() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://twitter.com/intent/tweet?url=${url}`, '_blank', 'width=600,height=400');
+        }
+
+        function copyToClipboard() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(() => {
+                showNotification("Link Copied", "clipboard!");
+            }).catch(err => {
+                console.error('Could not copy text: ', err);
+                alert("Could not copy link. Please try again.");
+            });
+        }
+
+        // Add cleanup function for when component unmounts
+        window.cleanupListeners = () => {
+            if (window.unsubscribeQuestions) {
+                window.unsubscribeQuestions();
+            }
+            if (window.unsubscribeAnswers) {
+                window.unsubscribeAnswers.forEach(unsubscribe => unsubscribe());
+                window.unsubscribeAnswers.clear();
+            }
+        };
+    </script>
+    
+</body>
+</html>
